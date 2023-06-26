@@ -1,0 +1,4 @@
+[core]
+    remote = emotion-tweet
+['remote "emotion-tweet"']
+    url = "https://www.icloud.com/iclouddrive/084E9TMZ_lykn3QhU-kIX1DDQ#merged_training"
