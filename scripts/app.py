@@ -1,21 +1,22 @@
 import streamlit as st
+from scripts.predict import text_to_sequences, predict
 
 
 
 st.title("Tweet Emotion Recognition")
 
 st.write("Tweet Emotion Recognition can accurately identify a wide a range of emotions such as Suprise, Fear, Joy, Angry, Sadness and Love.")
-st.markdown('''
-<style>
-[data-testid="stMarkdownContainer"] ul{
-    list-style-position: inside;
-}
-</style>
-''', unsafe_allow_html=True)
 
-text = st.text_area("Tweet About Emotion", help="You can tweet about your Emotion.")
+tweet = st.text_area("Tweet About Emotion", help="You can tweet about your Emotion.")
 
 submit = st.button("Submit")
 
-if submit:
-    st.write(text)
+if submit:   
+    st.title("Result")
+
+    padded = text_to_sequences(tweet)
+
+    a = predict(padded)
+
+    st.write(a)
+    

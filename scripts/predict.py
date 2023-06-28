@@ -1,21 +1,66 @@
+import json
 import pandas as pd
-import pickle
+import numpy as np
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 
-MODEL_PATH = './models/tweet_model.pkl'
+MODEL_DIR = './models/tweet_model.h5'
+TOKENIZER_DIR = './models/tokenizer_data.json'
 
 
-def predict(tweet):
+def text_to_sequences(tweet):
+    """
+        params:
+            tweet: str      -> raw string of the tweet
+        
+        return:
+            padded: list    -> sequences and padded of the tweet
+    """
 
-    with open(MODEL_PATH, 'rb') as f:
-        model = pickle.load(f)
-    # model = pd.read_pickle(MODEL_PATH)
+    with open(TOKENIZER_DIR, 'r') as f:
+        tokenizer_data = json.load(f)
 
-    predicted = model.predict(tweet)
-    print(predicted)
+    # parameters
+    params = tokenizer_data['tokenizer_params']
+    # Instiantiate the Tokenizer
+    tokenizer = Tokenizer(num_words=params['num_words'], oov_token=params['oov_token'])
+
+    # extract word_index from json
+    word_index = tokenizer_data['word_index']
+
+    # assign word index to the tokenizer
+    tokenizer.word_index = word_index
+
+    # generate and padded the sequences
+    sequence = tokenizer.texts_to_sequences([tweet])
+    padded = pad_sequences(sequence, maxlen=params['max_length'], padding=params['padding_type'], truncating=params['trunc_type'])
+
+    return padded
+
+
+
+
+def predict(padded_tweet):
+    """
+        params:
+            padded_tweet: list
+    """
+
+    # Load the saved model
+    model = load_model(MODEL_DIR)
+
+    # predict the tweet 
+    predicted = model.predict(padded_tweet)
+
+    # return the maximum index
+    index = np.argmax(predicted)
+
+    print(index)
 
 
 
 tweet = "i feel awful about it too because it s my job to get him in a position to succeed and it just didn t happen here"
-
-predict(tweet)
+padded = text_to_sequences(tweet)
+predict(padded)
