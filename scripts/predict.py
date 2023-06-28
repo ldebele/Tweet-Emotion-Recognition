@@ -7,6 +7,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 
 MODEL_DIR = './models/tweet_model.h5'
+LABEL_DIR = './models/Labels.json'
 TOKENIZER_DIR = './models/tokenizer_data.json'
 
 
@@ -46,6 +47,9 @@ def predict(padded_tweet):
     """
         params:
             padded_tweet: list
+        
+        return:
+            emotion: str
     """
 
     # Load the saved model
@@ -57,10 +61,11 @@ def predict(padded_tweet):
     # return the maximum index
     index = np.argmax(predicted)
 
-    print(index)
+    # open the json file
+    with open(LABEL_DIR, 'r') as f:
+        label = json.load(f)
 
+    # get the emotions from the index
+    emotion = label[str(index)]
 
-
-tweet = "i feel awful about it too because it s my job to get him in a position to succeed and it just didn t happen here"
-padded = text_to_sequences(tweet)
-predict(padded)
+    return emotion
