@@ -12,13 +12,12 @@ tweet = st.text_area("Tweet Your Emotion", help="You can tweet about your Emotio
 
 submit = st.button("Submit")
 
-if submit:   
-    st.title("Result")
-
+if submit:
+    # generate padded and sequence of the tweet   
     padded = text_to_sequences(tweet)
-
-    a = predict(padded)
-
-
-    st.write(a)
+    # predict the tweet
+    emotion = predict(padded)
+    
+    st.subheader("Result")
+    st.write(f'Emotion: {emotion}')
     
