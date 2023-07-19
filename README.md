@@ -2,7 +2,7 @@
 The aim of this project is to identify wide range of emotions. It has the ability to identify emotions like Surprise, Fear, Joy, Anger, Sadness, and Love. The model can effectively analyze and classify emotional expressions present in tweet texts.
 
 <p align="center">
-    <img src='./demo/demo_images.png' alt="Demo Image">
+    <img src='./demo/demo_image.png' alt="Demo Image">
 </p>
 ---
 
