@@ -60,6 +60,7 @@ def predict(padded_tweet):
 
     # return the maximum index
     index = np.argmax(predicted)
+    # index = 0
 
     # open the json file
     with open(LABEL_DIR, 'r') as f:
