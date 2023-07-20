@@ -12,11 +12,23 @@ The dataset has thousands of tweets, each classified in one of six emotions.
 
 
 ## Getting Started
-### Installation
+
+1. Create a virtual environment
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+2. Clone the repository to your local machine
+``` 
+git clone https://github.com/ldebele/Tweet-Emotion-Recognition.git
+cd Tweet-Emotion-Recognition
+```
+3. Install the required dependencies
 ``` 
 pip3 install -r requirements.txt
 ``` 
-### Run
+
+4. Run the web app
 ``` 
 streamlit run './src/app.py'
 ``` 
